@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+    <data>
+
+        <import
+            alias="userBean"
+            type="com.example.mytest.bean.UserBean" />
+
+        <variable
+            name="user"
+            type="userBean" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="姓名："
+            android:textColor="#333"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{user.name}"
+            android:textColor="#333"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="年龄："
+            android:textColor="#333"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(user.age)}"
+            android:textColor="#333"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btn_chat_notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="聊天消息通知" />
+
+        <Button
+            android:id="@+id/btn_circle_notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="朋友圈消息通知" />
+
+        <Button
+            android:id="@+id/btn_get_channel_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="getChannelInfo"
+            android:text="获取通知渠道信息" />
+
+        <Button
+            android:id="@+id/btn_test_donwload"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="getChannelInfo"
+            android:text="测试断点续传" />
+
+    </LinearLayout>
+</layout>
