@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.example.mytest.map.ParkMapActivity;
 import com.example.mytest.notification.NotificationTestActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -24,6 +25,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_test_donwload:
                 startActivity(new Intent(this, DownloadApkActivity.class));
+                break;
+            case R.id.btn_test_map:
+                startActivity(new Intent(this, ParkMapActivity.class));
                 break;
         }
     }

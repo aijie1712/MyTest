@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">MyTest</string>
+    <string name="gaode_key">bf86d574afa59dd5d070d6b232df787b</string>
+
+    <string name="map_no_location_permission_tip">如不能确定你的位置，你可以通过以下操作提高定位精确度；在位置设置中打开GPS和无线网络</string>
+    <string name="cancel">取消</string>
+    <string name="confirm">确定</string>
+    <string name="goSetting">去设置</string>
 </resources>

@@ -3,4 +3,14 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="white">#ffffff</color>
+
+    <!--全局大文本颜色-->
+    <color name="global_text_color">#000000</color>
+    <color name="global_text_333">#333333</color>
+    <color name="global_text_color_middle">#666666</color>
+    <color name="global_text_color_hint">#999999</color>
+    <color name="divide_line_color">#F0F0F0</color>
+    <color name="global_blue">#1870b8</color>
 </resources>
