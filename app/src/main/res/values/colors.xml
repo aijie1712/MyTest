@@ -13,4 +13,10 @@
     <color name="global_text_color_hint">#999999</color>
     <color name="divide_line_color">#F0F0F0</color>
     <color name="global_blue">#1870b8</color>
+
+    <!--半透明的按钮背景色-->
+    <color name="trans_btn_color">#88999999</color>
+
+    <color name="map_park_stroke_color">#88ff0000</color>
+    <color name="map_parking_space_fill_color">#88ff0000</color>
 </resources>

@@ -6,4 +6,6 @@
     <string name="cancel">取消</string>
     <string name="confirm">确定</string>
     <string name="goSetting">去设置</string>
+
+    <string name="map_read_me">1、点击清除所有 会把添加的覆盖物给全部清空，重新开始添加\n2、缩放地图到合适大小，在地图上点击需要绘制的区域的轮廓的点，结束后点击添加停车场区域，就添加了一个停车场</string>
 </resources>
