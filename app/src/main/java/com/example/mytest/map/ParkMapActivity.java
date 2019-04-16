@@ -14,13 +14,17 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.CircleHoleOptions;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.maps.model.Polygon;
 import com.amap.api.maps.model.PolygonOptions;
 import com.example.mytest.R;
 import com.example.mytest.map.location.LocationClient;
 import com.example.mytest.map.location.MyLocationListener;
+import com.example.mytest.map.utils.ParkingSpackUtils;
 import com.example.mytest.utils.LogUtils;
+import com.example.mytest.utils.UiUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +42,8 @@ public class ParkMapActivity extends AppCompatActivity
     private double longitude;
 
     private List<LatLng> polygonOutlineList;  // 多边形轮廓
+
+    private Polygon polygon;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -114,6 +120,11 @@ public class ParkMapActivity extends AppCompatActivity
             @Override
             public void onMapClick(LatLng latLng) {
                 polygonOutlineList.add(latLng);
+                if (polygon != null) {
+                    if (polygon.contains(latLng)) {
+                        UiUtil.showToast(ParkMapActivity.this, "在停车场");
+                    }
+                }
             }
         });
     }
@@ -127,6 +138,7 @@ public class ParkMapActivity extends AppCompatActivity
             case R.id.btn_remove_all:
                 aMap.clear();
                 polygonOutlineList.clear();
+                polygon = null;
                 break;
             case R.id.btn_readme:
                 startActivity(new Intent(this, MapReadmeActivity.class));
@@ -138,27 +150,95 @@ public class ParkMapActivity extends AppCompatActivity
      * 停车场--添加多边形
      */
     private void addPark() {
+        aMap.clear();
         // 声明 多边形参数对象
         PolygonOptions polygonOptions = new PolygonOptions();
         // 添加 多边形的每个顶点（顺序添加）
         polygonOptions.addAll(polygonOutlineList);
-        for (LatLng latLng : polygonOutlineList) {
-            createRectangle(latLng);
-        }
         polygonOutlineList.clear();
         polygonOptions.strokeWidth(5) // 多边形的边框
                 .strokeColor(getResources().getColor(R.color.map_park_stroke_color)) // 边框颜色
                 .fillColor(getResources().getColor(R.color.trans_btn_color));   // 多边形的填充色
         // 绘制
-        aMap.addPolygon(polygonOptions);
+        polygon = aMap.addPolygon(polygonOptions);
+        float area = AMapUtils.calculateArea(polygonOptions.getPoints());
+        float scalePerPixel = aMap.getScalePerPixel();
+        LogUtils.i("aijie", "区域总面积大小：" + area);
+        LogUtils.i("aijie", "缩放比例：" + scalePerPixel);
+        if (area > 0) {
+            List<LatLng> pointList = polygonOptions.getPoints();
+            for (int i = 0; i < pointList.size(); i++) {
+                LatLng currentPoint = pointList.get(i);
+                LatLng nextPoint;
+                if ((i + 1) < pointList.size()) {
+                    nextPoint = pointList.get(i + 1);
+                } else {
+                    nextPoint = pointList.get(0);
+                }
+                // 计算两点间的实际直线距离
+                float distance = AMapUtils.calculateLineDistance(currentPoint, nextPoint);
+                // 两点间坐标长度
+                double latlngDistance = ParkingSpackUtils.getTwoPointLength(currentPoint, nextPoint);
+                // 地图坐标比例，及实际距离/坐标记录   1000:1
+                double mapRatio = distance / latlngDistance;
+                // 计算停车位的数量
+                int parkingSpaceCount = (int) (distance / (ParkConstant.parkingSpaceWidth + ParkConstant.parkingSpaceDistance));
+                // 停车位的坐标宽度和长度
+                double parkingSpaceLatlngWidth = ParkConstant.parkingSpaceWidth / mapRatio;
+                double parkingSpaceLatlngLength = parkingSpaceLatlngWidth * 2;
+                // 停车位的间距的坐标宽度
+                double parkingSpaceDistance = ParkConstant.parkingSpaceDistance / mapRatio;
+                if (parkingSpaceCount > 2) {
+                    parkingSpaceCount = 2;
+                }
+
+                // 计算第一个车位的开始坐标，是车距
+                LatLng first = ParkingSpackUtils.getPointLatlng(currentPoint,nextPoint,parkingSpaceDistance);
+                LatLng second = ParkingSpackUtils.getPointLatlng(currentPoint,nextPoint,parkingSpaceDistance+parkingSpaceLatlngWidth);
+
+                List<LatLng> latLngList = new ArrayList<>();
+                latLngList.add(first);
+                latLngList.add(second);
+                latLngList.add(first);
+                latLngList.add(second);
+
+                createParkingSpace(latLngList);
+
+//                for (int j = 0; j < parkingSpaceCount; j++) {
+//                    // 停车位的中心坐标
+//                    LatLng parkingSpaceLatlng = ParkingSpackUtils.getPointLatlng(currentPoint, nextPoint,
+//                            (j + 1) * parkingSpaceLatlngLength - parkingSpaceLatlngLength / 2);
+//                    createParkingSpace(parkingSpaceLatlng, parkingSpaceLatlngLength);
+//                }
+            }
+        }
     }
 
     /**
      * 停车位-生成一个长方形的四个坐标点
+     *
+     * @param latLngList                   矩形中心点
      */
-    private void createRectangle(LatLng center) {
-        double halfHeight = 1.0f / 10000;
-        double halfWidth = 0.5f / 10000;
+    private void createParkingSpace(List<LatLng> latLngList) {
+        // 绘制一个长方形
+        PolygonOptions options = new PolygonOptions();
+        options.addAll(latLngList)
+                .fillColor(getResources().getColor(R.color.map_parking_space_fill_color))
+                .strokeColor(Color.RED)
+                .strokeWidth(1);
+        options.addHoles(new CircleHoleOptions());
+        aMap.addPolygon(options);
+    }
+
+    /**
+     * 停车位-生成一个长方形的四个坐标点
+     *
+     * @param center                   矩形中心点
+     * @param parkingSpaceLatlngLength 矩形坐标宽度
+     */
+    private void createParkingSpace(LatLng center, double parkingSpaceLatlngLength) {
+        double halfHeight = parkingSpaceLatlngLength * 2;
+        double halfWidth = parkingSpaceLatlngLength;
         List<LatLng> latLngs = new ArrayList<>();
         LatLng leftTop = new LatLng(center.latitude - halfHeight, center.longitude - halfWidth);
         LatLng rightTop = new LatLng(center.latitude - halfHeight, center.longitude + halfWidth);
@@ -169,14 +249,13 @@ public class ParkMapActivity extends AppCompatActivity
         latLngs.add(rightBottom);
         latLngs.add(leftBottom);
         float length = AMapUtils.calculateLineDistance(leftTop, rightTop);
-        float zoom = aMap.getCameraPosition().zoom;
-        LogUtils.i("aijie", "矩形的宽：" + length);
-        LogUtils.i("aijie", "真实的宽：" + length/zoom);
         // 绘制一个长方形
-        aMap.addPolygon(new PolygonOptions()
-                .addAll(latLngs)
+        PolygonOptions options = new PolygonOptions();
+        options.addAll(latLngs)
                 .fillColor(getResources().getColor(R.color.map_parking_space_fill_color))
                 .strokeColor(Color.RED)
-                .strokeWidth(1));
+                .strokeWidth(1);
+        options.addHoles(new CircleHoleOptions());
+        aMap.addPolygon(options);
     }
 }
