@@ -46,6 +46,7 @@
                 android:onClick="onClick"
                 android:text="删除所有区域" />
         </LinearLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

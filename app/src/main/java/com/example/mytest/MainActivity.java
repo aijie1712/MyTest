@@ -7,6 +7,8 @@ import android.view.View;
 
 import com.example.mytest.map.ParkMapActivity;
 import com.example.mytest.notification.NotificationTestActivity;
+import com.example.mytest.utils.AppUtils;
+import com.example.mytest.utils.LogUtils;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -28,6 +30,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_test_map:
                 startActivity(new Intent(this, ParkMapActivity.class));
+                break;
+            case R.id.btn_get_imei:
+                String result = AppUtils.getUUID(this);
+                LogUtils.i(result);
                 break;
         }
     }

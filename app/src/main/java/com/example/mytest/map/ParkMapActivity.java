@@ -24,7 +24,6 @@ import com.example.mytest.map.location.LocationClient;
 import com.example.mytest.map.location.MyLocationListener;
 import com.example.mytest.map.utils.ParkingSpackUtils;
 import com.example.mytest.utils.LogUtils;
-import com.example.mytest.utils.UiUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,7 +121,7 @@ public class ParkMapActivity extends AppCompatActivity
                 polygonOutlineList.add(latLng);
                 if (polygon != null) {
                     if (polygon.contains(latLng)) {
-                        UiUtil.showToast(ParkMapActivity.this, "在停车场");
+                        createParkingSpace(latLng, parkingSpaceDistance);
                     }
                 }
             }
@@ -145,6 +144,8 @@ public class ParkMapActivity extends AppCompatActivity
                 break;
         }
     }
+
+    private double parkingSpaceDistance;
 
     /**
      * 停车场--添加多边形
@@ -187,29 +188,7 @@ public class ParkMapActivity extends AppCompatActivity
                 double parkingSpaceLatlngWidth = ParkConstant.parkingSpaceWidth / mapRatio;
                 double parkingSpaceLatlngLength = parkingSpaceLatlngWidth * 2;
                 // 停车位的间距的坐标宽度
-                double parkingSpaceDistance = ParkConstant.parkingSpaceDistance / mapRatio;
-                if (parkingSpaceCount > 2) {
-                    parkingSpaceCount = 2;
-                }
-
-                // 计算第一个车位的开始坐标，是车距
-                LatLng first = ParkingSpackUtils.getPointLatlng(currentPoint,nextPoint,parkingSpaceDistance);
-                LatLng second = ParkingSpackUtils.getPointLatlng(currentPoint,nextPoint,parkingSpaceDistance+parkingSpaceLatlngWidth);
-
-                List<LatLng> latLngList = new ArrayList<>();
-                latLngList.add(first);
-                latLngList.add(second);
-                latLngList.add(first);
-                latLngList.add(second);
-
-                createParkingSpace(latLngList);
-
-//                for (int j = 0; j < parkingSpaceCount; j++) {
-//                    // 停车位的中心坐标
-//                    LatLng parkingSpaceLatlng = ParkingSpackUtils.getPointLatlng(currentPoint, nextPoint,
-//                            (j + 1) * parkingSpaceLatlngLength - parkingSpaceLatlngLength / 2);
-//                    createParkingSpace(parkingSpaceLatlng, parkingSpaceLatlngLength);
-//                }
+                parkingSpaceDistance = ParkConstant.parkingSpaceDistance / mapRatio;
             }
         }
     }
@@ -217,7 +196,7 @@ public class ParkMapActivity extends AppCompatActivity
     /**
      * 停车位-生成一个长方形的四个坐标点
      *
-     * @param latLngList                   矩形中心点
+     * @param latLngList 矩形中心点
      */
     private void createParkingSpace(List<LatLng> latLngList) {
         // 绘制一个长方形

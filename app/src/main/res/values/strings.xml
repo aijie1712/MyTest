@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyTest</string>
+    <string name="app_name">停车场</string>
     <string name="gaode_key">bf86d574afa59dd5d070d6b232df787b</string>
 
     <string name="map_no_location_permission_tip">如不能确定你的位置，你可以通过以下操作提高定位精确度；在位置设置中打开GPS和无线网络</string>
@@ -7,5 +7,7 @@
     <string name="confirm">确定</string>
     <string name="goSetting">去设置</string>
 
-    <string name="map_read_me">1、点击清除所有 会把添加的覆盖物给全部清空，重新开始添加\n2、缩放地图到合适大小，在地图上点击需要绘制的区域的轮廓的点，结束后点击添加停车场区域，就添加了一个停车场</string>
+    <string name="map_read_me">1、点击清除所有 会把添加的覆盖物给全部清空，重新开始添加\n
+        2、缩放地图到合适大小，在地图上点击需要绘制的区域的轮廓的点，结束后点击添加停车场区域，就添加了一个停车场\n
+        3、添加完停车场后，点击停车场区域内可以添加一个停车位\n</string>
 </resources>
