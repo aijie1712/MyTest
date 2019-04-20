@@ -1,0 +1,44 @@
+<application>
+  <component name="VimSettings">
+    <state version="4" enabled="false" />
+    <globalmarks />
+    <filemarks>
+      <file name="C:/F/asSpace/IntelligentAndMan/PersonalInfoModule/src/main/res/values/strings.xml" timestamp="1553496964573">
+        <mark key="[" line="7" column="42" />
+        <mark key="]" line="7" column="42" />
+        <mark key="." line="7" column="42" />
+      </file>
+      <file name="C:/F/asSpace/IntelligentAndMan/PersonalInfoModule/src/main/res/layout/activity_personal_info.xml" timestamp="1553496958312">
+        <mark key="[" line="38" column="53" />
+        <mark key="]" line="29" column="60" />
+        <mark key="." line="29" column="60" />
+        <mark key="^" line="29" column="60" />
+      </file>
+      <file name="C:/F/asSpace/IntelligentAndMan/IMModule/src/main/java/cmeplaza/com/immodule/fragment/ConversationListFragment.kt" timestamp="1553497084463" />
+      <file name="C:/F/asSpace/IntelligentAndMan/PersonalInfoModule/src/main/java/cmeplaza/com/personalinfomodule/mine/PersonalInfoActivity.kt" timestamp="1553496988233">
+        <mark key="[" line="40" column="42" />
+        <mark key="]" line="40" column="42" />
+        <mark key="." line="40" column="42" />
+      </file>
+    </filemarks>
+    <jumps />
+    <registers>
+      <register name="&quot;" type="4">
+        <text>l</text>
+      </register>
+      <register name="-" type="4">
+        <text>l</text>
+      </register>
+    </registers>
+    <search>
+      <last-dir>0</last-dir>
+      <show-last>false</show-last>
+    </search>
+    <history />
+    <shortcut-conflicts>
+      <shortcut-conflict owner="vim">
+        <text>ctrl pressed N</text>
+      </shortcut-conflict>
+    </shortcut-conflicts>
+  </component>
+</application>
