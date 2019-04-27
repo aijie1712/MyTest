@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -30,17 +31,22 @@ import java.util.List;
 
 /**
  * 显示停车场的地图页面
+ * @author aijie
  */
 public class ParkMapActivity extends AppCompatActivity
         implements MyLocationListener, View.OnClickListener {
     private MapView mMapView = null;
-    //初始化地图控制器对象
+    /**
+     * 初始化地图控制器对象
+     */
     private AMap aMap;
-
     private double latitude;
     private double longitude;
 
-    private List<LatLng> polygonOutlineList;  // 多边形轮廓
+    /**
+     * 多边形轮廓
+     */
+    private List<LatLng> polygonOutlineList;
 
     private Polygon polygon;
 
