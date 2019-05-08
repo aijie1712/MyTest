@@ -18,4 +18,7 @@
   <action id="NewElementInMenuGroup">
     <keyboard-shortcut first-keystroke="alt n" />
   </action>
+  <action id="TogglePresentationMode">
+    <keyboard-shortcut first-keystroke="ctrl semicolon" />
+  </action>
 </keymap>
