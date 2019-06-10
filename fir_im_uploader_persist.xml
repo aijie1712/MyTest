@@ -2,5 +2,6 @@
   <component name="KeysManager">
     <TeamManager />
     <UPLOAD_FLAG>cancel</UPLOAD_FLAG>
+    <FLAG>cancel</FLAG>
   </component>
 </application>
